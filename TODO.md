@@ -1,0 +1,9 @@
+- [x] Fix Bootstrap class errors in templates/index.html
+  - [x] Change "fa-2x" to "fs-4" for icon sizing in stats cards
+  - [x] Change "border-left-primary" to "border-start-primary" in stats cards
+  - [x] Change "border-left-success" to "border-start-success" in stats cards
+  - [x] Change "border-left-warning" to "border-start-warning" in stats cards
+  - [x] Change "border-left-info" to "border-start-info" in stats cards
+  - [x] Change "font-weight-bold" to "fw-bold" in stats cards and headings
+  - [x] Change "text-gray-800" to "text-dark" in stats cards
+  - [x] Remove "btn-block" from quick action buttons

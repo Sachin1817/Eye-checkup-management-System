@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Patients - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Patients</h1>
+            <a href="{{ url_for('patients.add_patient') }}" class="btn btn-primary">Add New Patient</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Date of Birth</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for patient in patients %}
+                            <tr>
+                                <td>{{ patient.id }}</td>
+                                <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                                <td>{{ patient.date_of_birth.strftime('%Y-%m-%d') if patient.date_of_birth else '' }}</td>
+                                <td>{{ patient.phone }}</td>
+                                <td>{{ patient.email }}</td>
+                                <td>
+                                    <a href="{{ url_for('patients.view_patient', id=patient.id) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ url_for('patients.edit_patient', id=patient.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form method="POST" action="{{ url_for('patients.delete_patient', id=patient.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this patient?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

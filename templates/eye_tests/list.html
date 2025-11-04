@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Eye Tests - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Eye Test Results</h1>
+            <a href="{{ url_for('eye_tests.add_eye_test') }}" class="btn btn-primary">Add Eye Test Result</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Appointment</th>
+                                <th>Test Date</th>
+                                <th>Visual Acuity</th>
+                                <th>Intraocular Pressure</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for eye_test in eye_tests %}
+                            <tr>
+                                <td>{{ eye_test.id }}</td>
+                                <td>{{ eye_test.patient.first_name }} {{ eye_test.patient.last_name }}</td>
+                                <td>{{ eye_test.appointment_id }}</td>
+                                <td>{{ eye_test.test_date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ eye_test.visual_acuity_left or 'N/A' }} / {{ eye_test.visual_acuity_right or 'N/A' }}</td>
+                                <td>{{ eye_test.intraocular_pressure_left or 'N/A' }} / {{ eye_test.intraocular_pressure_right or 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ url_for('eye_tests.view_eye_test', id=eye_test.id) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ url_for('eye_tests.edit_eye_test', id=eye_test.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form method="POST" action="{{ url_for('eye_tests.delete_eye_test', id=eye_test.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this eye test result?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

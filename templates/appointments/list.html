@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Appointments</h1>
+            <a href="{{ url_for('appointments.add_appointment') }}" class="btn btn-primary">Schedule Appointment</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.id }}</td>
+                                <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                                <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                                <td>{{ appointment.appointment_date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ appointment.appointment_time.strftime('%H:%M') }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if appointment.status == 'completed' else 'warning' if appointment.status == 'scheduled' else 'danger' }}">
+                                        {{ appointment.status.title() }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('appointments.view_appointment', id=appointment.id) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ url_for('appointments.edit_appointment', id=appointment.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form method="POST" action="{{ url_for('appointments.delete_appointment', id=appointment.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this appointment?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Report{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Generate Report</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.report_type.label }}
+            {{ form.report_type(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.patient_id.label }}
+            {{ form.patient_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.doctor_id.label }}
+            {{ form.doctor_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.start_date.label }}
+            {{ form.start_date(class="form-control", type="date") }}
+        </div>
+        <div class="form-group">
+            {{ form.end_date.label }}
+            {{ form.end_date(class="form-control", type="date") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+    </form>
+</div>
+{% endblock %}

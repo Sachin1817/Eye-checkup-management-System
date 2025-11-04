@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Prescription - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card">
+            <div class="card-header">
+                <h3>Edit Prescription</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.patient_id.label(class="form-label") }}
+                            {{ form.patient_id(class="form-control") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.doctor_id.label(class="form-label") }}
+                            {{ form.doctor_id(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.prescription_date.label(class="form-label") }}
+                            {{ form.prescription_date(class="form-control") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.duration_months.label(class="form-label") }}
+                            {{ form.duration_months(class="form-control") }}
+                        </div>
+                    </div>
+                    <h5 class="mt-3">Left Eye Prescription</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form.sphere_left.label(class="form-label") }}
+                            {{ form.sphere_left(class="form-control", step="0.25") }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.cylinder_left.label(class="form-label") }}
+                            {{ form.cylinder_left(class="form-control", step="0.25") }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.axis_left.label(class="form-label") }}
+                            {{ form.axis_left(class="form-control") }}
+                        </div>
+                    </div>
+                    <h5 class="mt-3">Right Eye Prescription</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form.sphere_right.label(class="form-label") }}
+                            {{ form.sphere_right(class="form-control", step="0.25") }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.cylinder_right.label(class="form-label") }}
+                            {{ form.cylinder_right(class="form-control", step="0.25") }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.axis_right.label(class="form-label") }}
+                            {{ form.axis_right(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.pupillary_distance.label(class="form-label") }}
+                            {{ form.pupillary_distance(class="form-control", step="0.5") }}
+                        </div>
+                    </div>
+                    {{ form.notes.label(class="form-label") }}
+                    {{ form.notes(class="form-control", rows="3") }}
+                    <div class="mt-3">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('prescriptions.list_prescriptions') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

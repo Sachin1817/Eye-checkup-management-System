@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Billings - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Billings</h1>
+            <a href="{{ url_for('billings.add_billing') }}" class="btn btn-primary">Add Billing</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Appointment</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Payment Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for billing in billings %}
+                            <tr>
+                                <td>{{ billing.id }}</td>
+                                <td>{{ billing.patient.first_name }} {{ billing.patient.last_name }}</td>
+                                <td>{{ billing.appointment_id }}</td>
+                                <td>${{ "%.2f"|format(billing.amount) }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if billing.status == 'paid' else 'warning' if billing.status == 'pending' else 'danger' }}">
+                                        {{ billing.status.title() }}
+                                    </span>
+                                </td>
+                                <td>{{ billing.payment_date.strftime('%Y-%m-%d') if billing.payment_date else 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ url_for('billings.view_billing', id=billing.id) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ url_for('billings.edit_billing', id=billing.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form method="POST" action="{{ url_for('billings.delete_billing', id=billing.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this billing record?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Prescriptions - Eye Check-up Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Prescriptions</h1>
+            <a href="{{ url_for('prescriptions.add_prescription') }}" class="btn btn-primary">Add Prescription</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Prescription Date</th>
+                                <th>Left Eye (Sphere/Cylinder/Axis)</th>
+                                <th>Right Eye (Sphere/Cylinder/Axis)</th>
+                                <th>Duration</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prescription in prescriptions %}
+                            <tr>
+                                <td>{{ prescription.id }}</td>
+                                <td>{{ prescription.patient.first_name }} {{ prescription.patient.last_name }}</td>
+                                <td>{{ prescription.doctor.first_name }} {{ prescription.doctor.last_name }}</td>
+                                <td>{{ prescription.prescription_date.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    {% if prescription.sphere_left %}
+                                        S: {{ prescription.sphere_left }}<br>
+                                        C: {{ prescription.cylinder_left or 'N/A' }}<br>
+                                        A: {{ prescription.axis_left or 'N/A' }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if prescription.sphere_right %}
+                                        S: {{ prescription.sphere_right }}<br>
+                                        C: {{ prescription.cylinder_right or 'N/A' }}<br>
+                                        A: {{ prescription.axis_right or 'N/A' }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>{{ prescription.duration_months }} months</td>
+                                <td>
+                                    <a href="{{ url_for('prescriptions.view_prescription', id=prescription.id) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ url_for('prescriptions.edit_prescription', id=prescription.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form method="POST" action="{{ url_for('prescriptions.delete_prescription', id=prescription.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this prescription?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

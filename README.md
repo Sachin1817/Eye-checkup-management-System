@@ -74,7 +74,7 @@ A comprehensive web-based application for managing eye care clinic operations, b
 ### Additional Libraries
 - **python-dotenv 1.0.1**: Environment variable management
 - **email-validator 2.1.0**: Email validation
-
+![image_alt](https://github.com/Sachin1817/Eye-checkup-management-System/blob/3f35c709bf7fd41f74e972b7546e8628f32ae964/Screenshot%202025-11-04%20190943.png)
 ## Installation
 
 1. **Clone the repository:**
